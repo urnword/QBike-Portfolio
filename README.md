@@ -372,4 +372,4 @@ This repository is licensed under **CC BY-NC-ND 4.0** (Creative Commons Attribut
 
 This repository contains **selected code snippets for portfolio review only**. It does not contain the full application source code. The complete codebase is maintained in a private repository.
 
-© 2026 Muhamad Zaid Izzuddin bin Nazri. All rights reserved.
+© 2026 Zaid Izzuddin. All rights reserved.
