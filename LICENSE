@@ -1,14 +1,35 @@
-Copyright (c) 2026 Zaid Izzuddin. All rights reserved.
+Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
 
-Proprietary Software — Evaluation and Showcase License Only
+Copyright (c) 2026 Muhamad Zaid Izzuddin bin Nazri. All rights reserved.
 
-This repository contains documentation, architecture designs, and selected conceptual code snippets representing the QBike application. 
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives
+4.0 International License.
 
-Permission is hereby granted solely to view and inspect the contents of this repository for evaluation, showcase, and educational purposes (e.g., job application reviews, code quality inspections).
+You are free to:
 
-Strictly Prohibited Actions:
-1. Copying, duplicating, cloning, or distributing the materials, designs, or code snippets in this repository for use in commercial, educational, or private production applications.
-2. Modifying or creating derivative works based on the contents of this repository.
-3. Sublicensing, distributing, selling, or leasing the materials or software designs.
+  Share — copy and redistribute the material in any medium or format for any purpose,
+  even commercially (attribution required, see below).
 
-THE SOFTWARE AND DESIGNS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Under the following terms:
+
+  Attribution — You must give appropriate credit to the original author (Muhamad Zaid
+  Izzuddin bin Nazri), provide a link to this repository, and indicate that no changes were
+  made. You may do so in any reasonable manner, but not in any way that suggests the
+  author endorses you or your use.
+
+  NonCommercial — You may not use the material for commercial purposes.
+
+  NoDerivatives — If you remix, transform, or build upon the material, you may not
+  distribute the modified material. Viewing and citing this work for portfolio evaluation,
+  academic referencing, or technical review is explicitly permitted.
+
+No additional restrictions — You may not apply legal terms or technological measures that
+legally restrict others from doing anything the license permits.
+
+The full legal code of this license is available at:
+https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
+
+DISCLAIMER: This repository contains selected code snippets and documentation excerpts
+for portfolio evaluation purposes only. It does not constitute the full source code of the
+QBike application. The complete application source code is proprietary and maintained
+in a private repository.
