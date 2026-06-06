@@ -1,0 +1,129 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() { return request.auth != null; }
+    function isOwner(uid) { return request.auth != null && request.auth.uid == uid; }
+    
+    function isAdmin() { 
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin"; 
+    }
+    
+    function isStaff() { 
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "staff"; 
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || (request.auth != null && (isAdmin() || isStaff()));
+      allow create: if false; // Cloud Functions handle creation
+      allow update: if (isOwner(userId) && !request.resource.data.diff(resource.data).affectedKeys().hasAny([
+        'role', 'verificationStatus', 'verificationRejectedReason', 'isBlocked', 'blockType', 'cooldownUntil', 
+        'lateReturnCount', 'profileComplete', 
+        'createdAt', 'sessionVersion', 'stats', 'email', 'uid', 'lastLoginAt'
+      ])) || (request.auth != null && isAdmin());
+      allow delete: if request.auth != null && isAdmin();
+
+      match /notifications/{id} {
+        allow read, delete: if isOwner(userId) || (request.auth != null && isAdmin());
+        allow update: if (isOwner(userId) || (request.auth != null && isAdmin())) && 
+                        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isRead']);
+      }
+
+      match /bookingStats/{statsId} {
+        allow read: if isOwner(userId) || (request.auth != null && (isAdmin() || isStaff()));
+        allow write: if false;
+      }
+    }
+
+    // Top-level notifications (used by submitVerificationRequest and admin actions)
+    match /notifications/{id} {
+      allow read: if (request.auth != null && resource.data.userId == request.auth.uid) || (request.auth != null && isAdmin());
+      allow update: if ((request.auth != null && resource.data.userId == request.auth.uid) || (request.auth != null && isAdmin())) && 
+                      request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isRead']);
+      allow delete: if (request.auth != null && resource.data.userId == request.auth.uid) || (request.auth != null && isAdmin());
+    }
+
+    match /bookings/{bookingId} {
+      allow read: if (request.auth != null && resource.data.userId == request.auth.uid) || (request.auth != null && isAdmin());
+      allow write: if false; // Cloud functions only
+    }
+
+    match /bikes/{bikeId} {
+      allow read: if isAuthenticated();
+      // All bike mutations go through Server Actions (admin.ts) which use the Admin SDK.
+      // Client-side writes are prohibited to prevent inventory desync.
+      allow write: if false;
+
+      match /damages/{damageId} {
+        allow read: if request.auth != null && (isAdmin() || isStaff());
+        allow write: if false;
+      }
+
+      match /maintenance/{maintenanceId} {
+        allow read: if request.auth != null && (isAdmin() || isStaff());
+        allow write: if false;
+      }
+    }
+
+    match /inventory/current {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
+    match /policy/current {
+      allow read: if isAuthenticated();
+      allow write: if request.auth != null && isAdmin();
+    }
+
+    match /verificationList/{id} {
+      allow read, write: if request.auth != null && isAdmin();
+    }
+
+    match /verificationUploads/{id} {
+      allow read, write: if request.auth != null && isAdmin();
+    }
+
+    match /practicums/{id} {
+      allow read: if isAuthenticated();
+      allow write: if request.auth != null && isAdmin();
+    }
+
+    match /adminReports/{id} {
+      allow read, write: if request.auth != null && isAdmin();
+    }
+
+    // contactMessages collection is preserved for legacy data but no longer used by the app.
+    // All new support requests are written to /reports with type "contact_support".
+    match /contactMessages/{id} {
+      allow read, write: if false;
+    }
+
+    // Audit log — written exclusively by the Admin SDK (Server Actions).
+    // Admins can read for compliance review; no client writes permitted.
+    match /auditLog/{docId} {
+      allow read: if request.auth != null && isAdmin();
+      allow write: if false;
+    }
+
+    // Unified reports collection — covers damage_return, damage_midride,
+    // collection_issue, and contact_support (user-submitted types).
+    // policy_violation is written by Cloud Functions using the Admin SDK only.
+    match /reports/{reportId} {
+      // Verified users may create their own reports (except policy_violation)
+      allow create: if isAuthenticated()
+                    && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.type != "policy_violation";
+
+      // Users can read their own reports; admins can read all
+      allow read: if (request.auth != null && resource.data.userId == request.auth.uid) || (request.auth != null && isAdmin());
+
+      // Only admins may update (resolution fields); never delete
+      allow update: if request.auth != null && isAdmin();
+      allow delete: if false;
+    }
+  }
+}

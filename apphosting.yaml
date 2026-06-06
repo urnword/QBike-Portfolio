@@ -1,0 +1,40 @@
+# apphosting.yaml — Firebase App Hosting configuration
+# Deployed by: npm run deploy:hosting
+
+runConfig:
+  cpu: 1
+  memoryMiB: 512
+  minInstances: 0
+  maxInstances: 10
+  concurrency: 80
+
+env:
+  # ── Public Firebase Config (safe to commit) ──────────────────────
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "AIzaSyARm-FCTAM5kPVDG8qZZbf_zIOJWkwlOas"
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "qbike-app.firebaseapp.com"
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "qbike-app"
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "qbike-app.firebasestorage.app"
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "386311968961"
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:386311968961:web:e0b753a9545a13d8901c40"
+
+  - variable: NEXT_PUBLIC_FIREBASE_VAPID_KEY
+    value: "BJ-5VQ0C4qFOdqWujviJTf4JZ2e1d6kTUJOo3ttaWAzL_Hne-R005X264AXNxSyt_WwsQwyXizid09qyuzjZ_4k"
+  - variable: NEXT_PUBLIC_GEMINI_API_KEY
+    secret: GEMINI_API_KEY
+
+  # ── Application Config ───────────────────────────────────────────
+  - variable: NEXT_PUBLIC_ALLOWED_EMAIL_DOMAIN
+    value: "moe-dl.edu.my"
+  - variable: NEXT_PUBLIC_APP_NAME
+    value: "QBike"
+  - variable: NEXT_PUBLIC_APP_URL
+    value: "https://qbike-kmj.web.app"
+
+# Note: Admin SDK credentials are NOT needed here.
+# Firebase App Hosting automatically provisions Application Default Credentials (ADC).

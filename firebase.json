@@ -1,0 +1,114 @@
+{
+  "firestore": {
+    "database": "(default)",
+    "location": "asia-southeast1",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "apphosting": {
+    "backendId": "qbike",
+    "rootDir": "/",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "firestore-debug.log",
+      "pubsub-debug.log",
+      "ui-debug.log",
+      "functions",
+      "firebase-export",
+      "firebase-export-*",
+      "*.py",
+      "scratch",
+      "dist"
+    ],
+    "alwaysDeployFromSource": true
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        ".runtimeconfig.json"
+      ]
+    }
+  ],
+  "auth": {
+    "providers": {
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "QBike",
+        "supportEmail": "zaidizzuddin07@gmail.com"
+      }
+    }
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099,
+      "host": "0.0.0.0"
+    },
+    "functions": {
+      "port": 5001,
+      "host": "0.0.0.0"
+    },
+    "firestore": {
+      "port": 8080,
+      "host": "0.0.0.0"
+    },
+    "storage": {
+      "port": 9199,
+      "host": "0.0.0.0"
+    },
+    "pubsub": {
+      "port": 8085,
+      "host": "0.0.0.0"
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000,
+      "host": "0.0.0.0"
+    },
+    "single_project_mode": true
+  },
+  "hosting": [
+    {
+      "site": "qbike-kmj",
+      "public": "public",
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "rewrites": [
+        {
+          "source": "**",
+          "run": {
+            "serviceId": "qbike",
+            "region": "asia-southeast1"
+          }
+        }
+      ]
+    },
+    {
+      "site": "qbike-app",
+      "public": "public",
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "rewrites": [
+        {
+          "source": "**",
+          "run": {
+            "serviceId": "qbike",
+            "region": "asia-southeast1"
+          }
+        }
+      ]
+    }
+  ],
+  "storage": {
+    "rules": "storage.rules",
+    "bucket": "qbike-app.firebasestorage.app"
+  }
+}

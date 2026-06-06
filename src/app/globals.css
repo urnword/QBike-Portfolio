@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: #EC1C24;
+  --color-destructive-foreground: #FFFFFF;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --font-sans: var(--font-sans), 'Inter', system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius: 0.5rem;
+
+  --animate-panning: panning 20s ease-in-out infinite;
+
+  @keyframes panning {
+    0%, 10% { transform: scale(1.1) translateX(0%); }
+    45%, 55% { transform: scale(1.1) translateX(-8%); }
+    90%, 100% { transform: scale(1.1) translateX(0%); }
+  }
+}
+
+@layer base {
+  :root, :host {
+    --background: #F4F7FA;
+    --foreground: #455A64;
+    --card: #FFFFFF;
+    --card-foreground: #455A64;
+    --primary: #1B3392;
+    --primary-foreground: #FFFFFF;
+    --secondary: #26C6DA;
+    --secondary-foreground: #FFFFFF;
+    --muted: #F8FAFC;
+    --muted-foreground: #6B7280;
+    --border: #E5E7EB;
+    --input: #E5E7EB;
+    --ring: #1B3392;
+  }
+
+  .dark {
+    --background: #232a31;
+    --foreground: #d8dce3;
+    --card: #272b34;
+    --card-foreground: #d8dce3;
+    --primary: #1e88e5;
+    --primary-foreground: #FFFFFF;
+    --secondary: #26c6da;
+    --secondary-foreground: #FFFFFF;
+    --muted: #32394e;
+    --muted-foreground: #8d97ad;
+    --border: #3b4356;
+    --input: #3b4356;
+    --ring: #1e88e5;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-none;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/20;
+  }
+}
+
+/* Custom Scrollbar Styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.35);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.55);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.2);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.35);
+}
